@@ -1,0 +1,27 @@
+- name: Deploys VM based on cloud image
+  hosts: localhost
+  gather_facts: yes
+  become: no
+  vars:
+    flavor: fedora
+    name: vm1
+    vcpus: 2
+    ram: 2048
+    net: "default"
+    pool_dir: "{{ ansible_env.HOME }}/images"
+    ssh_pub_key: "{{ ansible_env.HOME }}/.ssh/id_rsa.pub"
+    cleanup: no
+  tasks:
+    - name: KVM Provision role
+      include_role:
+        name: vm_spawn
+      vars:
+        flavor: "{{ flavor }}"
+        vm_name: "{{ name }}"
+        vm_vcpus: "{{ vcpus }}"
+        vm_ram_mb: "{{ ram }}"
+        vm_net: "{{ net }}"
+        libvirt_pool_dir: "{{ pool_dir }}"
+        ssh_key: "{{ ssh_pub_key }}"
+        cleanup_tmp: "{{ cleanup }}"
+        user: "{{ lookup('env'), 'USER' }}"
