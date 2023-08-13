@@ -24,4 +24,4 @@
         libvirt_pool_dir: "{{ pool_dir }}"
         ssh_key: "{{ ssh_pub_key }}"
         cleanup_tmp: "{{ cleanup }}"
-        user: "{{ lookup('env'), 'USER' }}"
+        user: "{{ lookup('env', 'USER') }}"
